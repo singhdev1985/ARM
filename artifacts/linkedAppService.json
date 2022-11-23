@@ -1,0 +1,112 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "type": "string"
+        },
+        "appServiceName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "appServicePlanName": {
+            "type": "string"
+        },
+        "serverFarmResourceGroup": {
+            "type": "string"
+        },
+        "alwaysOn": {
+            "type": "bool"
+        },
+        "phpVersion": {
+            "type": "string"
+        },
+        "errorLink": {
+            "type": "string"
+        },
+        "appInsightname": {
+            "type": "string"
+        },
+        "applicationType": {
+            "type": "string"
+        },
+        "kind": {
+            "type": "string"
+        },
+        "requestSource": {
+            "type": "string"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2021-03-01",
+            "name": "[parameters('appServiceName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference('microsoft.insights/components/web-app-name-01', '2015-05-01').InstrumentationKey]"
+                        },
+                        {
+                            "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value": "[reference('microsoft.insights/components/web-app-name-01', '2015-05-01').ConnectionString]"
+                        },
+                        {
+                            "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+                            "value": "~2"
+                        },
+                        {
+                            "name": "XDT_MicrosoftApplicationInsights_Mode",
+                            "value": "default"
+                        },
+                        {
+                            "name": "ANCM_ADDITIONAL_ERROR_PAGE_LINK",
+                            "value": "[parameters('errorLink')]"
+                        }
+                    ],
+                    "phpVersion": "[parameters('phpVersion')]",
+                    "alwaysOn": "[parameters('alwaysOn')]"
+                },
+                "serverFarmId": "[format('/subscriptions/{0}/resourcegroups/{1}/providers/Microsoft.Web/serverfarms/{2}', parameters('subscriptionId'), parameters('serverFarmResourceGroup'), parameters('appServicePlanName'))]",
+                "clientAffinityEnabled": true
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Insights/components', parameters('appInsightname'))]",
+                "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+            ]
+        },
+      {
+      "name": "linkedAppInsight",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "relativePath": "linkedAppInsight.json"
+        },
+        "parameters": {
+          "appInsightname": {
+            "value": "[parameters('appInsightname')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "applicationType": {
+            "value": "[parameters('applicationType')]"
+          },
+          "kind": {
+            "value": "[parameters('kind')]"
+          },
+          "requestSource": {
+            "value": "[parameters('requestSource')]"
+          }
+        }
+      }
+    }
+    ]
+}

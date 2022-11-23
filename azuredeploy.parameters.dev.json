@@ -3,10 +3,43 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "storageName": {
-            "value": "devstore" 
+            "value": "DevStore" 
         },
         "location": {
-            "value": "Norway West" 
+            "value": "norwayeast" 
+        },
+        "appServiceName": {
+            "value": "ClientOrga_"
+        },
+        "appServicePlanName": {
+            "value": "ClientOrga_"
+        },
+        "subscriptionId": {
+            "value": "18c8d488-9b69-4619-ab58-724f279fe48e"
+        },
+        "serverFarmResourceGroup": {
+            "value": "norwayeast"
+        },
+        "alwaysOn": {
+            "value": true
+        },
+        "phpVersion": {
+            "value": "php|7.0"
+        },
+        "errorLink": {
+            "value": "https://ClientOrga-AppInsight.scm.azurewebsites.net/detectors?type=tools&name=eventviewer"
+        },
+        "appInsightname": {
+            "value": "ClientOrga_"
+        },
+        "applicationType": {
+            "value": "web"
+        },
+        "kind": {
+            "value": "web"
+        },
+        "requestSource": {
+            "value": "rest"
         }
     }
 }

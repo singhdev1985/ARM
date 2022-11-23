@@ -50,11 +50,11 @@
                     "appSettings": [
                         {
                             "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                            "value": "[reference('microsoft.insights/components/web-app-name-01', '2015-05-01').InstrumentationKey]"
+                            "value": "[reference('microsoft.insights/components/clientorgaappinsight', '2015-05-01').InstrumentationKey]"
                         },
                         {
                             "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
-                            "value": "[reference('microsoft.insights/components/web-app-name-01', '2015-05-01').ConnectionString]"
+                            "value": "[reference('microsoft.insights/components/clientorgaappinsight', '2015-05-01').ConnectionString]"
                         },
                         {
                             "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
@@ -76,8 +76,7 @@
                 "clientAffinityEnabled": true
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Insights/components', parameters('appInsightname'))]",
-                "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+                "linkedAppInsight"
             ]
         },
       {

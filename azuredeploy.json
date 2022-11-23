@@ -94,10 +94,10 @@
     }
   },
   "variables": {
-    "storageAccountName": "[concat(parameters('storageName'), uniqueString(resourceGroup().id))]",
-    "appServiceName": "[concat(parameters('appServiceName'), 'WebApp')]",
-    "appServicePlanName": "[concat(parameters('appServicePlanName'), 'Plan')]",
-    "appInsightname": "[concat(parameters('appInsightname'), 'AppInsight')]"
+  "storageAccountName": "[concat(parameters('storageName'),'storage')]",
+    "appServiceName": "[concat(parameters('appServiceName'), 'webapp')]",
+    "appServicePlanName": "[concat(parameters('appServicePlanName'), 'plan')]",
+    "appInsightname": "[concat(parameters('appInsightname'), 'appinsight')]"
   },
   "resources": [
     {
@@ -184,7 +184,7 @@
            "requestSource": {
             "value": "[parameters('requestSource')]"
           }
-        }
+        }        
       }
     }
 

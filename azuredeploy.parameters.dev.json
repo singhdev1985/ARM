@@ -18,13 +18,13 @@
             "value": "18c8d488-9b69-4619-ab58-724f279fe48e"
         },
         "serverFarmResourceGroup": {
-            "value": "norwayeast"
+            "value": "sit-rg-sandbox"
         },
         "alwaysOn": {
             "value": true
         },
         "phpVersion": {
-            "value": "php|7.0"
+            "value": ""
         },
         "errorLink": {
             "value": "https://ClientOrga-AppInsight.scm.azurewebsites.net/detectors?type=tools&name=eventviewer"

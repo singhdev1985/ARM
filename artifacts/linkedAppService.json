@@ -103,6 +103,9 @@
           },
           "requestSource": {
             "value": "[parameters('requestSource')]"
+          },
+          "appServiceName": {
+            "value": "[parameters('appServiceName')]"
           }
         }
       }

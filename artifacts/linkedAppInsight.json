@@ -31,6 +31,12 @@
             "metadata": {
                 "description": "Source of Azure Resource Manager deployment"
             }
+        },
+          "appServiceName": {
+            "type": "string",
+            "metadata": {
+                "description": "Source of Azure Resource Manager deployment"
+            }
         }
     },
     "resources": [

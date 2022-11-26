@@ -31,12 +31,6 @@
             "metadata": {
                 "description": "Source of Azure Resource Manager deployment"
             }
-        },
-          "appServiceName": {
-            "type": "string",
-            "metadata": {
-                "description": "Source of Azure Resource Manager deployment"
-            }
         }
     },
     "resources": [
@@ -52,5 +46,15 @@
                 "Request_Source": "[parameters('requestSource')]"
             }
         }
-    ]
+    ]  
+    ,"outputs": {
+        "APPINSIGHTS_INSTRUMENTATIONKEY": {
+            "type": "object",
+            "value": "[reference(parameters('appInsightname')).InstrumentationKey]"
+        },
+         "APPLICATIONINSIGHTS_CONNECTION_STRING": {
+            "type": "object",
+            "value": "[reference(parameters('appInsightname')).ConnectionString]"
+        }
+    }
 }

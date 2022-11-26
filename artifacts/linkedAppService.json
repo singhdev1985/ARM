@@ -48,14 +48,18 @@
             "properties": {
                 "siteConfig": {
                     "appSettings": [
-                        {
-                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                            "value": "[reference('microsoft.insights/components/clientorgaappinsight', '2015-05-01').InstrumentationKey]"
-                        },
-                        {
-                            "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
-                            "value": "[reference('microsoft.insights/components/clientorgaappinsight', '2015-05-01').ConnectionString]"
-                        },
+                    //     {
+                    //         "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                    //         // "value": "[reference('microsoft.insights/components/clientorgaappinsight', '2015-05-01').InstrumentationKey]"
+                    //        //   "value": "[reference(resourceId(parameters('serverFarmResourceGroup'), 'Microsoft.Resources/deployments','linkedAppInsight'), '2021-04-01').InstrumentationKey]"
+                    //             "value": "[reference(resourceId(parameters('serverFarmResourceGroup'), 'Microsoft.Resources/deployments','linkedAppInsight'), '2021-04-01').outputs.APPINSIGHTS_INSTRUMENTATIONKEY.value]"i887878778
+                    //     },
+                    //     {
+                    //         "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                    //         // "value": "[reference('microsoft.insights/components/clientorgaappinsight', '2015-05-01').ConnectionString]"
+                    //  //   "value": "[reference(resourceId(parameters('serverFarmResourceGroup'), 'Microsoft.Resources/deployments','linkedAppInsight'), '2021-04-01').ConnectionString]"
+                    //    "value": "[reference(resourceId(parameters('serverFarmResourceGroup'), 'Microsoft.Resources/deployments','linkedAppInsight'), '2021-04-01').outputs.APPLICATIONINSIGHTS_CONNECTION_STRING.value]"
+                    //     },
                         {
                             "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
                             "value": "~2"
@@ -72,43 +76,11 @@
                     "phpVersion": "[parameters('phpVersion')]",
                     "alwaysOn": "[parameters('alwaysOn')]"
                 },
-                "serverFarmId": "[format('/subscriptions/{0}/resourcegroups/{1}/providers/Microsoft.Web/serverfarms/{2}', parameters('subscriptionId'), parameters('serverFarmResourceGroup'), parameters('appServicePlanName'))]",
+               "serverFarmId": "[format('/subscriptions/{0}/resourcegroups/{1}/providers/Microsoft.Web/serverfarms/{2}', parameters('subscriptionId'), parameters('serverFarmResourceGroup'), parameters('appServicePlanName'))]",
                 "clientAffinityEnabled": true
-            },
-            "dependsOn": [
-                "linkedAppInsight"
-            ]
-        },
-      {
-      "name": "linkedAppInsight",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2021-04-01",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "relativePath": "linkedAppInsight.json"
-        },
-        "parameters": {
-          "appInsightname": {
-            "value": "[parameters('appInsightname')]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          },
-          "applicationType": {
-            "value": "[parameters('applicationType')]"
-          },
-          "kind": {
-            "value": "[parameters('kind')]"
-          },
-          "requestSource": {
-            "value": "[parameters('requestSource')]"
-          },
-          "appServiceName": {
-            "value": "[parameters('appServiceName')]"
-          }
+            }
+            
         }
-      }
-    }
+     
     ]
 }

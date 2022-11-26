@@ -21,7 +21,7 @@
             "value": "sit-rg-sandbox"
         },
         "alwaysOn": {
-            "value": true
+            "value": false
         },
         "phpVersion": {
             "value": ""

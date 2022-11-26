@@ -94,7 +94,7 @@
     }
   },
   "variables": {
-  "storageAccountName": "[concat(parameters('storageName'),'storage')]",
+    "storageAccountName": "[concat(parameters('storageName'),'storage')]",
     "appServiceName": "[concat(parameters('appServiceName'), 'webapp')]",
     "appServicePlanName": "[concat(parameters('appServicePlanName'), 'plan')]",
     "appInsightname": "[concat(parameters('appInsightname'), 'appinsight')]"
@@ -119,6 +119,8 @@
         }
       }
     },
+
+    
     {
       "name": "linkedAppServicePlan",
       "type": "Microsoft.Resources/deployments",
@@ -138,6 +140,34 @@
         }
       }
     },
+     {
+      "name": "linkedAppInsight",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "relativePath": "artifacts/linkedAppInsight.json"
+        },
+        "parameters": {
+          "appInsightname": {
+            "value": "[variables('appInsightname')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "applicationType": {
+            "value": "[parameters('applicationType')]"
+          },
+          "kind": {
+            "value": "[parameters('kind')]"
+          },
+          "requestSource": {
+            "value": "[parameters('requestSource')]"
+          }
+        }
+      }
+    },
    {
       "name": "linkedAppService",
       "type": "Microsoft.Resources/deployments",
@@ -147,6 +177,9 @@
         "templateLink": {
           "relativePath": "artifacts/linkedAppService.json"
         },
+       "dependsOn": [
+         "[resourceId('Microsoft.Resources/deployments', 'linkedAppInsight')]"
+        ],
         "parameters": {
           "subscriptionId": {
             "value": "[parameters('subscriptionId')]"
@@ -190,9 +223,17 @@
 
   ],
   "outputs": {
-    "storageEndpoint": {
+    // "storageEndpoint": {
+    //   "type": "object",
+    //   "value": "[reference('linkedStorageAccount').outputs.storageEndpoint.value]"
+    // }
+     "APPINSIGHTS_INSTRUMENTATIONKEY": {
       "type": "object",
-      "value": "[reference('linkedStorageAccount').outputs.storageEndpoint.value]"
+      "value": "[reference('linkedAppInsight').outputs.APPINSIGHTS_INSTRUMENTATIONKEY.value]"
+    },
+     "APPLICATIONINSIGHTS_CONNECTION_STRING": {
+      "type": "object",
+      "value": "[reference('linkedAppInsight').outputs.APPLICATIONINSIGHTS_CONNECTION_STRING.value]"
     }
   }
 }
